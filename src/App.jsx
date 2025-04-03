@@ -48,7 +48,14 @@ export default function App() {
       stream.getTracks().forEach((track) =>
         pc.current.addTrack(track, stream)
       );
-      localVideoRef.current.srcObject = stream;
+      setTimeout(() => {
+        if (localVideoRef.current) {
+          localVideoRef.current.srcObject = stream;
+          console.log("✅ Stream assigned to local video element");
+        } else {
+          console.warn("⚠️ localVideoRef not available to assign stream");
+        }
+      }, 300);
       setLocalStream(stream);
       console.log("✅ Camera and mic access granted");
       alert("✅ Camera started!");
