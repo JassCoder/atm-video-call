@@ -38,6 +38,48 @@ export default function App() {
   const pc = useRef(new RTCPeerConnection(servers));
 
   const [roomId, setRoomId] = useState(null);
+
+  const [started, setStarted] = useState(false);
+
+  const handleStart = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      stream.getTracks().forEach((track) =>
+        pc.current.addTrack(track, stream)
+      );
+      localVideoRef.current.srcObject = stream;
+      setLocalStream(stream);
+      setStarted(true);
+    } catch (err) {
+      console.error("Failed to access camera/mic:", err);
+      alert("Camera/Mic access failed. Please allow permissions and try again.");
+    }
+  };
+
+
+  const [started, setStarted] = useState(false);
+
+  const handleStart = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      stream.getTracks().forEach((track) =>
+        pc.current.addTrack(track, stream)
+      );
+      localVideoRef.current.srcObject = stream;
+      setLocalStream(stream);
+      setStarted(true);
+    } catch (err) {
+      console.error("Failed to access camera/mic:", err);
+      alert("Camera/Mic access failed. Please allow permissions and try again.");
+    }
+  };
+
   const [waiting, setWaiting] = useState(false);
   const [localStream, setLocalStream] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -50,7 +92,19 @@ export default function App() {
 
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 2500);
-    return () => clearTimeout(timer);
+    
+  
+  return (
+    !started ? (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white text-center">
+        <h1 className="text-4xl mb-6 font-bold">Welcome to ATM</h1>
+        <button onClick={handleStart} className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-lg transition-all duration-300">
+          Start Chat
+        </button>
+      </div>
+    ) : (
+
+    ) => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -242,7 +296,19 @@ export default function App() {
   };
 
   if (showSplash) {
-    return (
+    
+  
+  return (
+    !started ? (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white text-center">
+        <h1 className="text-4xl mb-6 font-bold">Welcome to ATM</h1>
+        <button onClick={handleStart} className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-lg transition-all duration-300">
+          Start Chat
+        </button>
+      </div>
+    ) : (
+
+    
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -266,7 +332,19 @@ export default function App() {
     );
   }
 
+  
+  
   return (
+    !started ? (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white text-center">
+        <h1 className="text-4xl mb-6 font-bold">Welcome to ATM</h1>
+        <button onClick={handleStart} className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-lg transition-all duration-300">
+          Start Chat
+        </button>
+      </div>
+    ) : (
+
+    
     <div className="relative flex flex-col items-center justify-center min-h-screen gap-6 p-6 bg-gray-900 text-white">
       <div className="w-full bg-gray-800 text-center text-xs text-white p-1 rounded mb-2">
         [Top Banner Ad Placeholder]
@@ -376,5 +454,7 @@ export default function App() {
         </div>
       )}
     </div>
+  )
+  )
   );
 }
