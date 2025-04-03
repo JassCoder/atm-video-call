@@ -154,17 +154,16 @@ export default function App() {
         </div>
       ) : (
         <>
-          <div className="relative w-full max-w-4xl flex justify-center mt-6">
-            <video ref={remoteVideoRef} autoPlay playsInline className="w-full rounded-lg shadow-lg" />
-            <video ref={localVideoRef} autoPlay playsInline muted className="w-24 absolute bottom-4 right-4 border-2 border-white rounded shadow-lg" />
-          </div>
-
           {roomId && (
-            <div className="text-center bg-red-900 border border-yellow-400 p-4 rounded-xl shadow-lg mt-6 w-full max-w-lg">
+            <div className="text-center bg-red-900 border border-yellow-400 p-4 rounded-xl shadow-lg mt-4 w-full max-w-lg">
               <p className="text-xl font-bold">🚀 ROOM ID (Share this):</p>
               <p className="text-2xl font-mono text-yellow-300 break-words mt-2">{roomId}</p>
             </div>
           )}
+          <div className="relative w-full max-w-4xl flex justify-center mt-4">
+            <video ref={remoteVideoRef} autoPlay playsInline className="w-full rounded-lg shadow-lg" />
+            <video ref={localVideoRef} autoPlay playsInline muted className="w-24 absolute bottom-4 right-4 border-2 border-white rounded shadow-lg" />
+          </div>
         </>
       )}
     </div>
