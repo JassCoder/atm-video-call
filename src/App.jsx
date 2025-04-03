@@ -50,10 +50,13 @@ export default function App() {
       );
       localVideoRef.current.srcObject = stream;
       setLocalStream(stream);
+      console.log("✅ Camera and mic access granted");
+      alert("✅ Camera started!");
       setStarted(true);
     } catch (err) {
       console.error("Failed to access camera/mic:", err);
-      alert("Camera/Mic access failed. Please allow permissions and try again.");
+      console.log("❌ Camera/Mic access failed");
+      alert("❌ Camera/Mic access failed. Please check permissions and try again.");
     }
   };
 
