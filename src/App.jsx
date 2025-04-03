@@ -35,14 +35,18 @@ export default function App() {
   const startRoom = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
       stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
       setStarted(true);
       setStatus("🎥 Local stream started");
 
       pc.current.ontrack = (event) => {
-        remoteVideoRef.current.srcObject = event.streams[0];
-        setStatus("✅ Remote stream connected!");
+        if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = event.streams[0];
+          setStatus("✅ Remote stream connected!");
+        }
       };
 
       const roomDoc = await addDoc(collection(db, "rooms"), {});
@@ -98,14 +102,18 @@ export default function App() {
       setStatus("🔗 Joining room: " + inputRoomId);
 
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
       stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
       setStarted(true);
       setStatus("🎥 Local stream started");
 
       pc.current.ontrack = (event) => {
-        remoteVideoRef.current.srcObject = event.streams[0];
-        setStatus("✅ Remote stream connected!");
+        if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = event.streams[0];
+          setStatus("✅ Remote stream connected!");
+        }
       };
 
       pc.current.onicecandidate = async (event) => {
